@@ -2,15 +2,11 @@ set(DIR ${PROJECTDIR}/src)
 
 set(MODULE_IFLAGS ${DIR})
 set(INCLUDE_DIR ${DIR})
-message(STATUS "INCLUDE_DIR: ${INCLUDE_DIR}")
-
 include_directories(${INCLUDE_DIR})
-# set(MODULE_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable)
-# set(MODULE_OPTIONS -w)
+set(MODULE_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable)
 
-add_compile_definitions(C_BW20_5G)
-
-set(CSRC ${DIR}/main.c ${DIR}/YE-DevAuth.c)
+set(CSRC ${DIR}/main.c ${DIR}/usr_main.c ${DIR}/bt.c)
+# set(CSRC ${DIR}/main.c ${DIR}/usr_main.c)
 
 
 ameba_internal_library(project_src)

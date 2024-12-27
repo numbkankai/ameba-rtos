@@ -5,7 +5,7 @@
 #include "vfs.h"
 #include "ameba_rtos_version.h"
 // #include "wifi_fast_connect.h"
-// #include "usr_main.h"
+#include "usr_main.h"
 static const char *TAG = "MAIN";
 u32 use_hw_crypto_func;
 
@@ -236,7 +236,6 @@ int main(void)
 	IPC_SEMDelay(rtos_time_delay_ms);
 
 	RTK_LOGI(TAG, "KM4 START SCHEDULER \n");
-	void app_main(void);
 	app_main();
 
 	/* Enable Schedule, Start Kernel */
