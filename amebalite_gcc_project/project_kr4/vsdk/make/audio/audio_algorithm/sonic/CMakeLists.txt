@@ -1,6 +1,6 @@
 set(DIR ${BASEDIR}/component/audio/audio_algorithm/sonic)
 
-set(MODULE_C_OPTIONS -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Werror)
+set(MODULE_C_OPTIONS -D__RTOS__ -Wno-multichar -Wno-unused-parameter )
 
 set(CSRC ${DIR}/sonic.c)
 

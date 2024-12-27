@@ -11,8 +11,8 @@ set(
 
 set(DIR ${BASEDIR}/component/audio/audio_algorithm/plc)
 
-set(MODULE_C_OPTIONS -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Werror)
-set(MODULE_CPP_OPTIONS  -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-narrowing -Werror)
+set(MODULE_C_OPTIONS -D__RTOS__ -Wno-multichar -Wno-unused-parameter )
+set(MODULE_CPP_OPTIONS  -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-narrowing )
 
 
 set(

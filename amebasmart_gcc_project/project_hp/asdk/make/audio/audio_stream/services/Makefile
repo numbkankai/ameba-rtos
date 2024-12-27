@@ -21,7 +21,7 @@ vpath %.cpp $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-unused-value -Wno-aligned-new -Wno-literal-suffix -Werror
+CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-unused-value -Wno-aligned-new -Wno-literal-suffix 
 #CPPFLAGS += -DCONFIG_AUDIO_MIXER_RECORD
 
 #*****************************************************************************#

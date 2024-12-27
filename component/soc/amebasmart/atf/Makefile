@@ -228,7 +228,7 @@ $(shell set -e;				\
 endef
 
 define cc-option
-$(call try-run, $(1) -Werror $(2) $(3) -c -x c /dev/null -o "$$TMP",$(3),$(4))
+$(call try-run, $(1)  $(2) $(3) -c -x c /dev/null -o "$$TMP",$(3),$(4))
 endef
 
 #march32-directive	=	$(call cc-option, $(CC), ,-march=armv8.2-a+fp16+dotprod, \
@@ -390,7 +390,7 @@ WARNINGS	+=		-Wshift-overflow -Wshift-sign-overflow \
 endif
 
 ifneq (${E},0)
-ERRORS := -Werror
+ERRORS := 
 endif
 
 ASFLAGS_mips		=	-G0

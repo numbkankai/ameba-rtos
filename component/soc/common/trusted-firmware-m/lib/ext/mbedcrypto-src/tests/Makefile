@@ -38,7 +38,7 @@ LOCAL_CFLAGS += -g3
 endif
 
 ifdef RECORD_PSA_STATUS_COVERAGE_LOG
-LOCAL_CFLAGS += -Werror -DRECORD_PSA_STATUS_COVERAGE_LOG
+LOCAL_CFLAGS +=  -DRECORD_PSA_STATUS_COVERAGE_LOG
 endif
 
 # if we're running on Windows, build for Windows

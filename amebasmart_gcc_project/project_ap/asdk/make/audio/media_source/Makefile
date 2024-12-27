@@ -22,7 +22,7 @@ vpath %.cpp $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter  -DCONFIG_MEDIA_DATASOURCE_BUFFER -DCONFIG_MEDIA_DATASOURCE_HTTP -Werror
+GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter  -DCONFIG_MEDIA_DATASOURCE_BUFFER -DCONFIG_MEDIA_DATASOURCE_HTTP 
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

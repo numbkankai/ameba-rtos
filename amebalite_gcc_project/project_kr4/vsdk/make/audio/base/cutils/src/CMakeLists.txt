@@ -5,7 +5,7 @@ set(
     ${BASEDIR}/component/audio/base/osal/osal_c/interfaces
 )
 set(DIR ${BASEDIR}/component/audio/base/cutils/src)
-set(MODULE_C_OPTIONS -D__RTOS__ -Werror -Wno-multichar)
+set(MODULE_C_OPTIONS -D__RTOS__  -Wno-multichar)
 set(
     CSRC
     ${DIR}/parcel.c

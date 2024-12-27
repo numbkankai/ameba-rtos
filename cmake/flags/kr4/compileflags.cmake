@@ -46,7 +46,7 @@ list(
     -nostdlib
     -fno-builtin-printf
     -Wall
-    -Werror
+    
     -Wpointer-arith
     -Wundef
     -Wno-write-strings

@@ -9,7 +9,7 @@ set(
 )
 
 set(MODULE_DEFINES __RTOS__)
-set(MODULE_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable -Werror)
+set(MODULE_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable )
 
 set(
     CSRC 

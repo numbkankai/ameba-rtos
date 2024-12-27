@@ -58,7 +58,7 @@ option(OT_APP_NCP "enable NCP app" OFF)
 option(OT_APP_RCP "enable RCP app" OFF)
 option(OT_RCP "enable RCP" OFF)
 option(BUILD_TESTING "BUILD_TESTING" OFF)
-# option(OT_COMPILE_WARNING_AS_ERROR "whether to include -Werror -pedantic-errors with gcc-compatible compilers" ON)
+# option(OT_COMPILE_WARNING_AS_ERROR "whether to include  -pedantic-errors with gcc-compatible compilers" ON)
 
 list(
 	APPEND

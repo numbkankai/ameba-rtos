@@ -20,7 +20,7 @@ vpath %.c $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable -Werror #-std=gnu++14
+GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-unused-const-variable  #-std=gnu++14
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

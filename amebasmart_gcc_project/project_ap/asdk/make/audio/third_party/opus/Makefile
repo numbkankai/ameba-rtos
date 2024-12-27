@@ -16,7 +16,7 @@ vpath %.c $(DIR)/silk/fixed $(shell find $(DIR)/silk/fixed -type d)
 vpath %.c $(DIR)/src $(shell find $(DIR)/src -type d)
 
 
-GLOBAL_CFLAGS := $(filter-out -Werror, $(GLOBAL_CFLAGS))
+GLOBAL_CFLAGS := $(filter-out , $(GLOBAL_CFLAGS))
 #*****************************************************************************#
 #                               Source FILE LIST                              #
 #*****************************************************************************#

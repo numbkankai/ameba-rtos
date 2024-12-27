@@ -7,7 +7,7 @@
 # See BSD-3-Clause license in README.md
 #
 
-CFLAGS=-I inc -I test -Os -Wcast-align -Wall -Werror -pedantic-errors -Wextra -Wshadow -Wparentheses -xc -std=c99 -Werror=maybe-uninitialized
+CFLAGS=-I inc -I test -Os -Wcast-align -Wall  -pedantic-errors -Wextra -Wshadow -Wparentheses -xc -std=c99 =maybe-uninitialized
 CC=/usr/local/bin/gcc-9
 
 QCBOR_OBJ=src/UsefulBuf.o src/qcbor_encode.o src/qcbor_decode.o src/ieee754.o

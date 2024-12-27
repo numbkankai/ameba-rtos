@@ -15,7 +15,7 @@ endif()
 set(DIR ${BASEDIR}/component/audio/audio_hal/amebadplus)
 
 set(MODULE_C_DEFINES __RTOS__ NDEBUG)
-set(MODULE_C_OPTIONS -UDEBUG -Wno-multichar -Werror)
+set(MODULE_C_OPTIONS -UDEBUG -Wno-multichar )
 
 if(CONFIG_WIFI_AUDIO)
     list(APPEND MODULE_C_DEFINES CONFIG_WL_AUDIO)

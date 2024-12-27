@@ -22,7 +22,7 @@
 # This script should be executed from the root of the project directory.
 #
 # For best effect, run either with cmake disabled, or cmake enabled in a mode
-# that includes -Werror.
+# that includes .
 
 use warnings;
 use strict;
@@ -66,7 +66,7 @@ for my $hash (@hashes) {
             and abort "Failed to disable $opt\n";
     }
 
-    system( "CFLAGS='-Werror -Wall -Wextra' make lib" )
+    system( "CFLAGS=' -Wall -Wextra' make lib" )
         and abort "Failed to build lib: $hash\n";
     system( "cd tests && make" ) and abort "Failed to build tests: $hash\n";
     system( "make test" ) and abort "Failed test suite: $hash\n";

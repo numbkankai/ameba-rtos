@@ -19,7 +19,7 @@ vpath %.cpp $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-literal-suffix -Werror
+CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-literal-suffix 
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

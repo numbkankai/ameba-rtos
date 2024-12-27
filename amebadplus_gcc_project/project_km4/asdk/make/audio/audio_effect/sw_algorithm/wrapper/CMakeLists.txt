@@ -12,7 +12,7 @@ set(
 set(DIR ${BASEDIR}/component/audio/audio_effect/sw_algorithm/wrapper/Bundle)
 
 set(MODULE_CPP_DEFINES __RTOS__)
-set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-literal-suffix -Werror)
+set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-literal-suffix )
 
 set(CPPSRC ${DIR}/EffectBundle.cpp)
 

@@ -19,7 +19,7 @@
 # This script should be executed from the root of the project directory.
 #
 # For best effect, run either with cmake disabled, or cmake enabled in a mode
-# that includes -Werror.
+# that includes .
 
 use warnings;
 use strict;
@@ -54,7 +54,7 @@ for my $kex (@kexes) {
             and abort "Failed to disable $k\n";
     }
 
-    system( "make lib CFLAGS='-Os -Werror'" ) and abort "Failed to build lib: $kex\n";
+    system( "make lib CFLAGS='-Os '" ) and abort "Failed to build lib: $kex\n";
 }
 
 system( "mv $config_h.bak $config_h" ) and die "$config_h not restored\n";

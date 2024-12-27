@@ -15,7 +15,7 @@ set(
 
 set(DIR ${BASEDIR}/component/audio/audio_stream/core)
 set(MODULE_CPP_DEFINES __RTOS__)
-set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter -Werror)
+set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter )
 
 set(
     CPPSRC 

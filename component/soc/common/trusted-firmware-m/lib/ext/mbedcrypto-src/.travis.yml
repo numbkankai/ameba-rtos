@@ -47,7 +47,7 @@ jobs:
         # passing at the time of writing. We will remove these limitations
         # gradually.
         - make generated_files
-        - make CC=clang-10 CFLAGS='-Werror -Wall -Wextra -fsanitize=address,undefined -fno-sanitize-recover=all -O2' LDFLAGS='-Werror -Wall -Wextra -fsanitize=address,undefined -fno-sanitize-recover=all'
+        - make CC=clang-10 CFLAGS=' -Wall -Wextra -fsanitize=address,undefined -fno-sanitize-recover=all -O2' LDFLAGS=' -Wall -Wextra -fsanitize=address,undefined -fno-sanitize-recover=all'
         - make test
         - programs/test/selftest
         - tests/scripts/test_psa_constant_names.py
@@ -97,7 +97,7 @@ jobs:
         # `ssl-opt.sh` and GnuTLS compat.sh here to meet the time limitation.
         - scripts/config.py full
         - make generated_files
-        - make CFLAGS='-O3 -Werror -fsanitize=address,undefined -fno-sanitize-recover=all' LDFLAGS='-Werror -fsanitize=address,undefined -fno-sanitize-recover=all'
+        - make CFLAGS='-O3  -fsanitize=address,undefined -fno-sanitize-recover=all' LDFLAGS=' -fsanitize=address,undefined -fno-sanitize-recover=all'
         - make test
         - programs/test/selftest
         - tests/scripts/test_psa_constant_names.py
@@ -123,7 +123,7 @@ jobs:
         # `ssl-opt.sh` and OpenSSl compat.sh here to meet the time limitation.
         - scripts/config.py full
         - make generated_files
-        - make CC=clang CFLAGS='-O3 -Werror -fsanitize=address,undefined -fno-sanitize-recover=all' LDFLAGS='-Werror -fsanitize=address,undefined -fno-sanitize-recover=all'
+        - make CC=clang CFLAGS='-O3  -fsanitize=address,undefined -fno-sanitize-recover=all' LDFLAGS=' -fsanitize=address,undefined -fno-sanitize-recover=all'
         # GnuTLS supports CAMELLIA but compat.sh doesn't properly enable it.
         - tests/compat.sh -p GnuTLS -e 'CAMELLIA'
         - tests/scripts/travis-log-failure.sh

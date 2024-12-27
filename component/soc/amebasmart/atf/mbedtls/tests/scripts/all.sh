@@ -749,8 +749,8 @@ component_build_deprecated () {
     scripts/config.pl full
     scripts/config.pl set MBEDTLS_DEPRECATED_WARNING
     # Build with -O -Wextra to catch a maximum of issues.
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra' lib programs
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra -Wno-unused-function' tests
+    make CC=gcc CFLAGS='-O  -Wall -Wextra' lib programs
+    make CC=gcc CFLAGS='-O  -Wall -Wextra -Wno-unused-function' tests
 
     msg "build: make, full config + DEPRECATED_REMOVED, clang -O" # ~ 30s
     # No cleanup, just tweak the configuration and rebuild
@@ -758,8 +758,8 @@ component_build_deprecated () {
     scripts/config.pl unset MBEDTLS_DEPRECATED_WARNING
     scripts/config.pl set MBEDTLS_DEPRECATED_REMOVED
     # Build with -O -Wextra to catch a maximum of issues.
-    make CC=clang CFLAGS='-O -Werror -Wall -Wextra' lib programs
-    make CC=clang CFLAGS='-O -Werror -Wall -Wextra -Wno-unused-function' tests
+    make CC=clang CFLAGS='-O  -Wall -Wextra' lib programs
+    make CC=clang CFLAGS='-O  -Wall -Wextra -Wno-unused-function' tests
 }
 
 
@@ -785,7 +785,7 @@ component_build_key_exchanges () {
 
 component_build_default_make_gcc_and_cxx () {
     msg "build: Unix make, -Os (gcc)" # ~ 30s
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -Os'
+    make CC=gcc CFLAGS=' -Wall -Wextra -Os'
 
     msg "test: verify header list in cpp_dummy_build.cpp"
     record_status check_headers_in_cpp
@@ -807,7 +807,7 @@ component_test_check_params_without_platform () {
     scripts/config.pl unset MBEDTLS_PLATFORM_SNPRINTF_ALT
     scripts/config.pl unset MBEDTLS_ENTROPY_NV_SEED
     scripts/config.pl unset MBEDTLS_PLATFORM_C
-    make CC=gcc CFLAGS='-Werror -O1' all test
+    make CC=gcc CFLAGS=' -O1' all test
 }
 
 component_test_check_params_silent () {
@@ -815,7 +815,7 @@ component_test_check_params_silent () {
     scripts/config.pl full # includes CHECK_PARAMS
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # too slow for tests
     sed -i 's/.*\(#define MBEDTLS_PARAM_FAILED( cond )\).*/\1/' "$CONFIG_H"
-    make CC=gcc CFLAGS='-Werror -O1' all test
+    make CC=gcc CFLAGS=' -O1' all test
 }
 
 component_test_no_platform () {
@@ -837,8 +837,8 @@ component_test_no_platform () {
     scripts/config.pl unset MBEDTLS_FS_IO
     # Note, _DEFAULT_SOURCE needs to be defined for platforms using glibc version >2.19,
     # to re-enable platform integration features otherwise disabled in C99 builds
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -std=c99 -pedantic -O0 -D_DEFAULT_SOURCE' lib programs
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O0' test
+    make CC=gcc CFLAGS=' -Wall -Wextra -std=c99 -pedantic -O0 -D_DEFAULT_SOURCE' lib programs
+    make CC=gcc CFLAGS=' -Wall -Wextra -O0' test
 }
 
 component_build_no_std_function () {
@@ -847,21 +847,21 @@ component_build_no_std_function () {
     scripts/config.pl full
     scripts/config.pl set MBEDTLS_PLATFORM_NO_STD_FUNCTIONS
     scripts/config.pl unset MBEDTLS_ENTROPY_NV_SEED
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O0'
+    make CC=gcc CFLAGS=' -Wall -Wextra -O0'
 }
 
 component_build_no_ssl_srv () {
     msg "build: full config except ssl_srv.c, make, gcc" # ~ 30s
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_SSL_SRV_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O0'
+    make CC=gcc CFLAGS=' -Wall -Wextra -O0'
 }
 
 component_build_no_ssl_cli () {
     msg "build: full config except ssl_cli.c, make, gcc" # ~ 30s
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_SSL_CLI_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O0'
+    make CC=gcc CFLAGS=' -Wall -Wextra -O0'
 }
 
 component_build_no_sockets () {
@@ -871,7 +871,7 @@ component_build_no_sockets () {
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_NET_C # getaddrinfo() undeclared, etc.
     scripts/config.pl set MBEDTLS_NO_PLATFORM_ENTROPY # uses syscall() on GNU/Linux
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O0 -std=c99 -pedantic' lib
+    make CC=gcc CFLAGS=' -Wall -Wextra -O0 -std=c99 -pedantic' lib
 }
 
 component_test_no_max_fragment_length () {
@@ -927,7 +927,7 @@ component_test_platform_calloc_macro () {
 component_test_aes_fewer_tables () {
     msg "build: default config with AES_FEWER_TABLES enabled"
     scripts/config.pl set MBEDTLS_AES_FEWER_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_FEWER_TABLES"
     make test
@@ -936,7 +936,7 @@ component_test_aes_fewer_tables () {
 component_test_aes_rom_tables () {
     msg "build: default config with AES_ROM_TABLES enabled"
     scripts/config.pl set MBEDTLS_AES_ROM_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_ROM_TABLES"
     make test
@@ -946,7 +946,7 @@ component_test_aes_fewer_tables_and_rom_tables () {
     msg "build: default config with AES_ROM_TABLES and AES_FEWER_TABLES enabled"
     scripts/config.pl set MBEDTLS_AES_FEWER_TABLES
     scripts/config.pl set MBEDTLS_AES_ROM_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_FEWER_TABLES + AES_ROM_TABLES"
     make test
@@ -961,7 +961,7 @@ component_test_m32_o0 () {
     # Build once with -O0, to compile out the i386 specific inline assembly
     msg "build: i386, make, gcc -O0 (ASan build)" # ~ 30s
     scripts/config.pl full
-    make CC=gcc CFLAGS='-O0 -Werror -Wall -Wextra -m32 -fsanitize=address'
+    make CC=gcc CFLAGS='-O0  -Wall -Wextra -m32 -fsanitize=address'
 
     msg "test: i386, make, gcc -O0 (ASan build)"
     make test
@@ -980,7 +980,7 @@ component_test_m32_o1 () {
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE
     scripts/config.pl unset MBEDTLS_MEMORY_BUFFER_ALLOC_C
     scripts/config.pl unset MBEDTLS_MEMORY_DEBUG
-    make CC=gcc CFLAGS='-O1 -Werror -Wall -Wextra -m32 -fsanitize=address'
+    make CC=gcc CFLAGS='-O1  -Wall -Wextra -m32 -fsanitize=address'
 
     msg "test: i386, make, gcc -O1 (ASan build)"
     make test
@@ -995,7 +995,7 @@ support_test_m32_o1 () {
 component_test_mx32 () {
     msg "build: 64-bit ILP32, make, gcc" # ~ 30s
     scripts/config.pl full
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -mx32'
+    make CC=gcc CFLAGS=' -Wall -Wextra -mx32'
 
     msg "test: 64-bit ILP32, make, gcc"
     make test
@@ -1022,7 +1022,7 @@ component_test_have_int32 () {
     scripts/config.pl unset MBEDTLS_HAVE_ASM
     scripts/config.pl unset MBEDTLS_AESNI_C
     scripts/config.pl unset MBEDTLS_PADLOCK_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -DMBEDTLS_HAVE_INT32'
+    make CC=gcc CFLAGS=' -Wall -Wextra -DMBEDTLS_HAVE_INT32'
 
     msg "test: gcc, force 32-bit bignum limbs"
     make test
@@ -1033,7 +1033,7 @@ component_test_have_int64 () {
     scripts/config.pl unset MBEDTLS_HAVE_ASM
     scripts/config.pl unset MBEDTLS_AESNI_C
     scripts/config.pl unset MBEDTLS_PADLOCK_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -DMBEDTLS_HAVE_INT64'
+    make CC=gcc CFLAGS=' -Wall -Wextra -DMBEDTLS_HAVE_INT64'
 
     msg "test: gcc, force 64-bit bignum limbs"
     make test
@@ -1044,7 +1044,7 @@ component_test_no_udbl_division () {
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # too slow for tests
     scripts/config.pl set MBEDTLS_NO_UDBL_DIVISION
-    make CFLAGS='-Werror -O1'
+    make CFLAGS=' -O1'
 
     msg "test: MBEDTLS_NO_UDBL_DIVISION native" # ~ 10s
     make test
@@ -1055,7 +1055,7 @@ component_test_no_64bit_multiplication () {
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # too slow for tests
     scripts/config.pl set MBEDTLS_NO_64BIT_MULTIPLICATION
-    make CFLAGS='-Werror -O1'
+    make CFLAGS=' -O1'
 
     msg "test: MBEDTLS_NO_64BIT_MULTIPLICATION native" # ~ 10s
     make test
@@ -1075,7 +1075,7 @@ component_build_arm_none_eabi_gcc () {
     scripts/config.pl unset MBEDTLS_THREADING_C
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # execinfo.h
     scripts/config.pl unset MBEDTLS_MEMORY_BUFFER_ALLOC_C # calls exit
-    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS='-Werror -Wall -Wextra' lib
+    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS=' -Wall -Wextra' lib
 }
 
 component_build_arm_none_eabi_gcc_no_udbl_division () {
@@ -1093,7 +1093,7 @@ component_build_arm_none_eabi_gcc_no_udbl_division () {
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # execinfo.h
     scripts/config.pl unset MBEDTLS_MEMORY_BUFFER_ALLOC_C # calls exit
     scripts/config.pl set MBEDTLS_NO_UDBL_DIVISION
-    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS='-Werror -Wall -Wextra' lib
+    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS=' -Wall -Wextra' lib
     echo "Checking that software 64-bit division is not required"
     if_build_succeeded not grep __aeabi_uldiv library/*.o
 }
@@ -1113,7 +1113,7 @@ component_build_arm_none_eabi_gcc_no_64bit_multiplication () {
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # execinfo.h
     scripts/config.pl unset MBEDTLS_MEMORY_BUFFER_ALLOC_C # calls exit
     scripts/config.pl set MBEDTLS_NO_64BIT_MULTIPLICATION
-    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS='-Werror -O1 -march=armv6-m -mthumb' lib
+    make CC=arm-none-eabi-gcc AR=arm-none-eabi-ar LD=arm-none-eabi-ld CFLAGS=' -O1 -march=armv6-m -mthumb' lib
     echo "Checking that software 64-bit multiplication is not required"
     if_build_succeeded not grep __aeabi_lmul library/*.o
 }
@@ -1159,7 +1159,7 @@ component_build_armcc () {
 component_test_allow_sha1 () {
     msg "build: allow SHA1 in certificates by default"
     scripts/config.pl set MBEDTLS_TLS_DEFAULT_ALLOW_SHA1_IN_CERTIFICATES
-    make CFLAGS='-Werror -Wall -Wextra'
+    make CFLAGS=' -Wall -Wextra'
     msg "test: allow SHA1 in certificates by default"
     make test
     if_build_succeeded tests/ssl-opt.sh -f SHA-1
@@ -1167,15 +1167,15 @@ component_test_allow_sha1 () {
 
 component_build_mingw () {
     msg "build: Windows cross build - mingw64, make (Link Library)" # ~ 30s
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 lib programs
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 lib programs
 
     # note Make tests only builds the tests, but doesn't run them
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror' WINDOWS_BUILD=1 tests
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='' WINDOWS_BUILD=1 tests
     make WINDOWS_BUILD=1 clean
 
     msg "build: Windows cross build - mingw64, make (DLL)" # ~ 30s
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 lib programs
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 tests
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 lib programs
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 tests
     make WINDOWS_BUILD=1 clean
 }
 

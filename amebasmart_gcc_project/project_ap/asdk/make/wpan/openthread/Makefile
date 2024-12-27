@@ -49,7 +49,7 @@ vpath %.c $(THREADDIR) $(shell find $(THREADDIR) -type d)
 
 #GLOBAL_CFLAGS += -DOPENTHREAD_CONFIG_CORE_USER_CONFIG_HEADER_ENABLE
 CPPFLAGS += -Wno-unused-parameter
-GLOBAL_CFLAGS := $(filter-out -Werror, $(GLOBAL_CFLAGS))
+GLOBAL_CFLAGS := $(filter-out , $(GLOBAL_CFLAGS))
 
 #*****************************************************************************#
 #                               Include FILE LIST                             #

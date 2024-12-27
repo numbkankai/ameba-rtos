@@ -34,8 +34,8 @@ vpath %.cpp $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Werror
-CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-narrowing -Werror -std=c++14 -std=gnu++14
+GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter 
+CPPFLAGS += -D__RTOS__ -Wno-multichar -Wno-unused-parameter -Wno-narrowing  -std=c++14 -std=gnu++14
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

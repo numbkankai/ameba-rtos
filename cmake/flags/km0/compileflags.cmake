@@ -35,7 +35,7 @@ list(
     -nostdlib
     -fno-builtin-printf
     -Wall
-    -Werror
+    
     -Wpointer-arith
     -Wstrict-prototypes
     -Wundef

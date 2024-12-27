@@ -525,7 +525,7 @@ void asymmetric_signature_wildcard(int alg_arg, int classification_flags)
     classification_flags |= ALG_IS_HASH_AND_SIGN;
     test_asymmetric_signature_algorithm(alg_arg, classification_flags);
     /* Any failure of this test function comes from
-     * asymmetric_signature_algorithm. Pacify -Werror=unused-label. */
+     * asymmetric_signature_algorithm. Pacify =unused-label. */
     goto exit;
 }
 /* END_CASE */

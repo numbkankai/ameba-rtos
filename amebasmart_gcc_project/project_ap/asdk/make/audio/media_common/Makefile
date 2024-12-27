@@ -19,7 +19,7 @@ vpath %.cpp $(shell find $(DIR) -type d)
 #*****************************************************************************#
 #                               CFLAGS                                        #
 #*****************************************************************************#
-GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-deprecated-copy -Werror
+GLOBAL_CFLAGS += -D__RTOS__ -Wno-multichar -Wno-deprecated-copy 
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

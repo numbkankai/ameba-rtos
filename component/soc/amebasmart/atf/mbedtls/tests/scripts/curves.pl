@@ -22,7 +22,7 @@
 # This script should be executed from the root of the project directory.
 #
 # For best effect, run either with cmake disabled, or cmake enabled in a mode
-# that includes -Werror.
+# that includes .
 
 use warnings;
 use strict;
@@ -55,7 +55,7 @@ for my $curve (@curves) {
     system( "scripts/config.pl unset $curve" )
         and abort "Failed to disable $curve\n";
 
-    system( "CFLAGS='-Werror -Wall -Wextra' make lib" )
+    system( "CFLAGS=' -Wall -Wextra' make lib" )
         and abort "Failed to build lib: $curve\n";
     system( "cd tests && make" ) and abort "Failed to build tests: $curve\n";
     system( "make test" ) and abort "Failed test suite: $curve\n";

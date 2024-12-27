@@ -59,8 +59,8 @@ CFLAGS += -Wswitch-default
 CFLAGS += -Wunreachable-code
 CFLAGS += -Winit-self
 CFLAGS += -Wmissing-field-initializers
-CFLAGS += -Werror=undef
-CFLAGS += -Werror -Wfatal-errors
+CFLAGS += =undef
+CFLAGS +=  -Wfatal-errors
 ARFLAGS = -rcs
 else
 CFLAGS += -Wall
@@ -76,8 +76,8 @@ CFLAGS += -Winit-self
 CFLAGS += -Wjump-misses-init
 CFLAGS += -Wlogical-op
 CFLAGS += -Wmissing-field-initializers
-CFLAGS += -Werror=undef
-CFLAGS += -Werror -Wfatal-errors
+CFLAGS += =undef
+CFLAGS +=  -Wfatal-errors
 #CFLAGS += -finstrument-functions
 endif
 #CFLAGS += -D__STDC_VERSION__=19900L

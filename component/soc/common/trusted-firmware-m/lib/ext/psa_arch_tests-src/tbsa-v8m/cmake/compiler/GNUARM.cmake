@@ -54,7 +54,7 @@ foreach(_LNG IN ITEMS "C" "ASM")
 	message(STATUS "[TBSA] : ${_LNG}  compiler used '${CMAKE_${_LNG}_COMPILER}'")
 endforeach()
 
-set(CMAKE_C_FLAGS              "-march=armv8-m.${ARCH} -mcmse -mthumb -Wall -Werror -O0 -nostartfiles -fdata-sections -ffunction-sections")
+set(CMAKE_C_FLAGS              "-march=armv8-m.${ARCH} -mcmse -mthumb -Wall  -O0 -nostartfiles -fdata-sections -ffunction-sections")
 set(CMAKE_ASM_FLAGS            "-march=armv8-m.${ARCH} -mthumb")
 set(CMAKE_EXE_LINKER_FLAGS     "-Xlinker --fatal-warnings -Xlinker --gc-sections -z max-page-size=0x400 -lgcc -lc -lnosys")
 

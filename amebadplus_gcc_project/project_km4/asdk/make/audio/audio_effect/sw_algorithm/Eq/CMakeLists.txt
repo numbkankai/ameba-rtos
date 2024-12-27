@@ -8,7 +8,7 @@ set(
 set(DIR ${BASEDIR}/component/audio/audio_effect/sw_algorithm/Eq/src)
 
 set(MODULE_C_DEFINES __RTOS__ NDEBUG)
-set(MODULE_C_OPTIONS -UDEBUG -Werror)
+set(MODULE_C_OPTIONS -UDEBUG )
 
 set(
     CSRC

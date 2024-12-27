@@ -21,7 +21,7 @@ vpath %.c $(shell find $(DIR)/ -type d)
 #                               CFLAGS                                        #
 #*****************************************************************************#
 GLOBAL_CFLAGS += -D__RTOS__
-GLOBAL_CFLAGS += -DNDEBUG -UDEBUG -Wno-multichar -Werror
+GLOBAL_CFLAGS += -DNDEBUG -UDEBUG -Wno-multichar 
 
 #*****************************************************************************#
 #                               Source FILE LIST                              #

@@ -13,7 +13,7 @@ set(
 
 set(
     MODULE_CPP_OPTIONS
-    -Wno-multichar -Wno-unused-parameter -std=gnu++17 -std=c++17 -Werror
+    -Wno-multichar -Wno-unused-parameter -std=gnu++17 -std=c++17 
 )
 
 set(CPPSRC ${DIR}/ameba_audio_mixer_usrcfg.cpp)

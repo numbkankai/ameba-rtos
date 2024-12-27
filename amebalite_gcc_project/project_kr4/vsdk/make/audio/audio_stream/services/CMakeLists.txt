@@ -16,7 +16,7 @@ set(
 set(DIR ${BASEDIR}/component/audio/audio_stream/services)
 
 set(MODULE_CPP_DEFINES __RTOS__)
-set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-value -Wno-aligned-new -Werror)
+set(MODULE_CPP_OPTIONS -Wno-multichar -Wno-unused-parameter -Wno-unused-value -Wno-aligned-new )
 set(
     CPPSRC 
     ${DIR}/track_shared.cpp

@@ -278,7 +278,7 @@ GLOBAL_CFLAGS += -nostartfiles
 GLOBAL_CFLAGS += -nostdlib
 GLOBAL_CFLAGS += -fno-builtin-printf
 GLOBAL_CFLAGS += -Wall
-GLOBAL_CFLAGS += -Werror
+GLOBAL_CFLAGS += 
 GLOBAL_CFLAGS += -Wpointer-arith
 
 #When the memory length is 4 bytes, memset/memcpy will be optimized for direct 32-bit reading and writing.

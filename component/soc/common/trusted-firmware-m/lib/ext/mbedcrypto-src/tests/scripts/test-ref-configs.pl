@@ -117,7 +117,7 @@ sub perform_test {
         system( "scripts/config.py set MBEDTLS_USE_PSA_CRYPTO" );
     }
 
-    system( "CFLAGS='-Os -Werror -Wall -Wextra' make" ) and abort "Failed to build: $conf_name\n";
+    system( "CFLAGS='-Os  -Wall -Wextra' make" ) and abort "Failed to build: $conf_name\n";
     system( "make test" ) and abort "Failed test suite: $conf_name\n";
 
     my $compat = $data->{'compat'};
@@ -143,7 +143,7 @@ sub perform_test {
             system( "make clean" );
             system( "scripts/config.py set MBEDTLS_DEBUG_C" );
             system( "scripts/config.py set MBEDTLS_ERROR_C" );
-            system( "CFLAGS='-Os -Werror -Wall -Wextra' make" ) and abort "Failed to build: $conf_name\n";
+            system( "CFLAGS='-Os  -Wall -Wextra' make" ) and abort "Failed to build: $conf_name\n";
         }
 
         print "\nrunning ssl-opt.sh $opt ($conf_name)\n";

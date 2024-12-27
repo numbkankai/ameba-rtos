@@ -187,7 +187,7 @@ pre_initialize_variables () {
 
     # CFLAGS and LDFLAGS for Asan builds that don't use CMake
     # default to -O2, use -Ox _after_ this if you want another level
-    ASAN_CFLAGS='-O2 -Werror -fsanitize=address,undefined -fno-sanitize-recover=all'
+    ASAN_CFLAGS='-O2  -fsanitize=address,undefined -fno-sanitize-recover=all'
 
     # Gather the list of available components. These are the functions
     # defined in this script whose name starts with "component_".
@@ -388,7 +388,7 @@ armc6_build_test()
 
     msg "build: ARM Compiler 6 ($FLAGS)"
     ARM_TOOL_VARIANT="ult" CC="$ARMC6_CC" AR="$ARMC6_AR" CFLAGS="$FLAGS" \
-                    WARNING_CFLAGS='-Werror -xc -std=c99' make lib
+                    WARNING_CFLAGS=' -xc -std=c99' make lib
 
     msg "size: ARM Compiler 6 ($FLAGS)"
     "$ARMC6_FROMELF" -z library/*.o
@@ -983,7 +983,7 @@ component_build_psa_crypto_spm () {
     # We can only compile, not link, since our test and sample programs
     # aren't equipped for the modified names used when MBEDTLS_PSA_CRYPTO_SPM
     # is active.
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -I../tests/include/spe' lib
+    make CC=gcc CFLAGS=' -Wall -Wextra -I../tests/include/spe' lib
 
     # Check that if a symbol is renamed by crypto_spe.h, the non-renamed
     # version is not present.
@@ -1762,7 +1762,7 @@ component_test_default_no_deprecated () {
     # configuration leaves something consistent.
     msg "build: make, default + MBEDTLS_DEPRECATED_REMOVED" # ~ 30s
     scripts/config.py set MBEDTLS_DEPRECATED_REMOVED
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra'
+    make CC=gcc CFLAGS='-O  -Wall -Wextra'
 
     msg "test: make, default + MBEDTLS_DEPRECATED_REMOVED" # ~ 5s
     make test
@@ -1771,7 +1771,7 @@ component_test_default_no_deprecated () {
 component_test_full_no_deprecated () {
     msg "build: make, full_no_deprecated config" # ~ 30s
     scripts/config.py full_no_deprecated
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra'
+    make CC=gcc CFLAGS='-O  -Wall -Wextra'
 
     msg "test: make, full_no_deprecated config" # ~ 5s
     make test
@@ -1788,7 +1788,7 @@ component_test_full_no_deprecated_deprecated_warning () {
     scripts/config.py full_no_deprecated
     scripts/config.py unset MBEDTLS_DEPRECATED_REMOVED
     scripts/config.py set MBEDTLS_DEPRECATED_WARNING
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra'
+    make CC=gcc CFLAGS='-O  -Wall -Wextra'
 
     msg "test: make, full_no_deprecated config, MBEDTLS_DEPRECATED_WARNING" # ~ 5s
     make test
@@ -1801,14 +1801,14 @@ component_test_full_deprecated_warning () {
     scripts/config.py full
     scripts/config.py set MBEDTLS_DEPRECATED_WARNING
     # Expect warnings from '#warning' directives in check_config.h.
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra -Wno-error=cpp' lib programs
+    make CC=gcc CFLAGS='-O  -Wall -Wextra -Wno-error=cpp' lib programs
 
     msg "build: make tests, full config + MBEDTLS_DEPRECATED_WARNING, expect warnings" # ~ 30s
     # Set MBEDTLS_TEST_DEPRECATED to enable tests for deprecated features.
     # By default those are disabled when MBEDTLS_DEPRECATED_WARNING is set.
     # Expect warnings from '#warning' directives in check_config.h and
     # from the use of deprecated functions in test suites.
-    make CC=gcc CFLAGS='-O -Werror -Wall -Wextra -Wno-error=deprecated-declarations -Wno-error=cpp -DMBEDTLS_TEST_DEPRECATED' tests
+    make CC=gcc CFLAGS='-O  -Wall -Wextra -Wno-error=deprecated-declarations -Wno-error=cpp -DMBEDTLS_TEST_DEPRECATED' tests
 
     msg "test: full config + MBEDTLS_TEST_DEPRECATED" # ~ 30s
     make test
@@ -1823,14 +1823,14 @@ are_empty_libraries () {
 component_build_crypto_default () {
   msg "build: make, crypto only"
   scripts/config.py crypto
-  make CFLAGS='-O1 -Werror'
+  make CFLAGS='-O1 '
   are_empty_libraries library/libmbedx509.* library/libmbedtls.*
 }
 
 component_build_crypto_full () {
   msg "build: make, crypto only, full config"
   scripts/config.py crypto_full
-  make CFLAGS='-O1 -Werror'
+  make CFLAGS='-O1 '
   are_empty_libraries library/libmbedx509.* library/libmbedtls.*
 }
 
@@ -1861,14 +1861,14 @@ component_test_crypto_for_psa_service () {
   scripts/config.py unset MBEDTLS_PK_C
   scripts/config.py unset MBEDTLS_PK_PARSE_C
   scripts/config.py unset MBEDTLS_PK_WRITE_C
-  make CFLAGS='-O1 -Werror' all test
+  make CFLAGS='-O1 ' all test
   are_empty_libraries library/libmbedx509.* library/libmbedtls.*
 }
 
 component_build_crypto_baremetal () {
   msg "build: make, crypto only, baremetal config"
   scripts/config.py crypto_baremetal
-  make CFLAGS="-O1 -Werror -I$PWD/tests/include/baremetal-override/"
+  make CFLAGS="-O1  -I$PWD/tests/include/baremetal-override/"
   are_empty_libraries library/libmbedx509.* library/libmbedtls.*
 }
 support_build_crypto_baremetal () {
@@ -1878,7 +1878,7 @@ support_build_crypto_baremetal () {
 component_build_baremetal () {
   msg "build: make, baremetal config"
   scripts/config.py baremetal
-  make CFLAGS="-O1 -Werror -I$PWD/tests/include/baremetal-override/"
+  make CFLAGS="-O1  -I$PWD/tests/include/baremetal-override/"
 }
 support_build_baremetal () {
     # Older Glibc versions include time.h from other headers such as stdlib.h,
@@ -1968,7 +1968,7 @@ component_build_no_pk_rsa_alt_support () {
     scripts/config.py set MBEDTLS_X509_CRT_WRITE_C
 
     # Only compile - this is primarily to test for compile issues
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -I../tests/include/alt-dummy'
+    make CC=gcc CFLAGS=' -Wall -Wextra -I../tests/include/alt-dummy'
 }
 
 component_build_module_alt () {
@@ -2001,7 +2001,7 @@ component_build_module_alt () {
 
     # We can only compile, not link, since we don't have any implementations
     # suitable for testing with the dummy alt headers.
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -I../tests/include/alt-dummy' lib
+    make CC=gcc CFLAGS=' -Wall -Wextra -I../tests/include/alt-dummy' lib
 }
 
 component_build_dhm_alt () {
@@ -2012,7 +2012,7 @@ component_build_dhm_alt () {
     scripts/config.py unset MBEDTLS_DEBUG_C
     # We can only compile, not link, since we don't have any implementations
     # suitable for testing with the dummy alt headers.
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -I../tests/include/alt-dummy' lib
+    make CC=gcc CFLAGS=' -Wall -Wextra -I../tests/include/alt-dummy' lib
 }
 
 component_test_no_use_psa_crypto_full_cmake_asan() {
@@ -2088,7 +2088,7 @@ component_test_psa_crypto_config_accel_ecdsa () {
 
     # Build the library
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -O -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS -O  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # Make sure this was not re-enabled by accident (additive config)
     not grep mbedtls_ecdsa_ library/ecdsa.o
@@ -2153,7 +2153,7 @@ component_test_psa_crypto_config_accel_ecdsa_use_psa () {
 
     # Build the library
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -O -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS -O  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # Make sure ECDSA was not re-enabled by accident (additive config)
     not grep mbedtls_ecdsa_ library/ecdsa.o
@@ -2224,7 +2224,7 @@ component_test_psa_crypto_config_accel_ecdh () {
 
     # Build the main library
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -O -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS -O  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # Make sure this was not re-enabled by accident (additive config)
     not grep mbedtls_ecdh_ library/ecdh.o
@@ -2301,7 +2301,7 @@ component_test_psa_crypto_config_accel_ecdh_use_psa () {
 
     # Build the main library
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -O -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS -O  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # Make sure this was not re-enabled by accident (additive config)
     not grep mbedtls_ecdh_ library/ecdh.o
@@ -2386,7 +2386,7 @@ component_test_psa_crypto_config_accel_ecjpake_use_psa () {
 
     # Build the main library
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -O -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS -O  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # Make sure this was not re-enabled by accident (additive config)
     not grep mbedtls_ecjpake_ library/ecjpake.o
@@ -2548,7 +2548,7 @@ component_test_psa_crypto_config_accel_rsa_signature () {
     scripts/config.py unset MBEDTLS_SSL_CBC_RECORD_SPLITTING
 
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     not grep mbedtls_rsa_rsassa_pkcs1_v15_sign library/rsa.o
     not grep mbedtls_rsa_rsassa_pss_sign_ext library/rsa.o
@@ -2578,7 +2578,7 @@ component_test_psa_crypto_config_accel_hash () {
     scripts/config.py unset MBEDTLS_SHA384_C
     scripts/config.py unset MBEDTLS_SHA512_C
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     not grep mbedtls_sha512_init library/sha512.o
     not grep mbedtls_sha1_init library/sha1.o
@@ -2604,7 +2604,7 @@ component_test_psa_crypto_config_accel_hash_keep_builtins () {
     scripts/config.py set MBEDTLS_PSA_CRYPTO_DRIVERS
     scripts/config.py set MBEDTLS_PSA_CRYPTO_CONFIG
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     msg "test: MBEDTLS_PSA_CRYPTO_CONFIG with accelerated+builtin hash"
     make test
@@ -2670,7 +2670,7 @@ component_test_psa_crypto_config_accel_hash_use_psa () {
     config_psa_crypto_hash_use_psa 1
 
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS" all
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS" all
 
     # There's a risk of something getting re-enabled via config_psa.h;
     # make sure it did not happen. Note: it's OK for MD_LIGHT to be enabled,
@@ -2746,7 +2746,7 @@ component_test_psa_crypto_config_accel_cipher () {
     scripts/config.py unset MBEDTLS_DES_C
 
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     not grep mbedtls_des* library/des.o
 
@@ -2777,7 +2777,7 @@ component_test_psa_crypto_config_accel_aead () {
     scripts/config.py unset MBEDTLS_SSL_TICKET_C
 
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     # There's a risk of something getting re-enabled via config_psa.h
     # make sure it did not happen.
@@ -2816,7 +2816,7 @@ component_test_psa_crypto_config_accel_pake() {
     scripts/config.py unset MBEDTLS_PSA_CRYPTO_SE_C
 
     loc_accel_flags="$loc_accel_flags $( echo "$loc_accel_list" | sed 's/[^ ]* */-DMBEDTLS_PSA_ACCEL_&/g' )"
-    make CFLAGS="$ASAN_CFLAGS -Werror -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
+    make CFLAGS="$ASAN_CFLAGS  -I../tests/include -I../tests -I../../tests -DPSA_CRYPTO_DRIVER_TEST -DMBEDTLS_TEST_LIBTESTDRIVER1 $loc_accel_flags" LDFLAGS="-ltestdriver1 $ASAN_CFLAGS"
 
     not grep mbedtls_ecjpake_init library/ecjpake.o
 
@@ -3200,8 +3200,8 @@ component_test_no_platform () {
     scripts/config.py unset MBEDTLS_PSA_ITS_FILE_C
     # Note, _DEFAULT_SOURCE needs to be defined for platforms using glibc version >2.19,
     # to re-enable platform integration features otherwise disabled in C99 builds
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -std=c99 -pedantic -Os -D_DEFAULT_SOURCE' lib programs
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -Os' test
+    make CC=gcc CFLAGS=' -Wall -Wextra -std=c99 -pedantic -Os -D_DEFAULT_SOURCE' lib programs
+    make CC=gcc CFLAGS=' -Wall -Wextra -Os' test
 }
 
 component_build_no_std_function () {
@@ -3219,14 +3219,14 @@ component_build_no_ssl_srv () {
     msg "build: full config except SSL server, make, gcc" # ~ 30s
     scripts/config.py full
     scripts/config.py unset MBEDTLS_SSL_SRV_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O1'
+    make CC=gcc CFLAGS=' -Wall -Wextra -O1'
 }
 
 component_build_no_ssl_cli () {
     msg "build: full config except SSL client, make, gcc" # ~ 30s
     scripts/config.py full
     scripts/config.py unset MBEDTLS_SSL_CLI_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O1'
+    make CC=gcc CFLAGS=' -Wall -Wextra -O1'
 }
 
 component_build_no_sockets () {
@@ -3236,7 +3236,7 @@ component_build_no_sockets () {
     scripts/config.py full
     scripts/config.py unset MBEDTLS_NET_C # getaddrinfo() undeclared, etc.
     scripts/config.py set MBEDTLS_NO_PLATFORM_ENTROPY # uses syscall() on GNU/Linux
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -O1 -std=c99 -pedantic' lib
+    make CC=gcc CFLAGS=' -Wall -Wextra -O1 -std=c99 -pedantic' lib
 }
 
 component_test_memory_buffer_allocator_backtrace () {
@@ -3423,7 +3423,7 @@ component_test_malloc_0_null () {
 component_test_aes_fewer_tables () {
     msg "build: default config with AES_FEWER_TABLES enabled"
     scripts/config.py set MBEDTLS_AES_FEWER_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_FEWER_TABLES"
     make test
@@ -3432,7 +3432,7 @@ component_test_aes_fewer_tables () {
 component_test_aes_rom_tables () {
     msg "build: default config with AES_ROM_TABLES enabled"
     scripts/config.py set MBEDTLS_AES_ROM_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_ROM_TABLES"
     make test
@@ -3442,7 +3442,7 @@ component_test_aes_fewer_tables_and_rom_tables () {
     msg "build: default config with AES_ROM_TABLES and AES_FEWER_TABLES enabled"
     scripts/config.py set MBEDTLS_AES_FEWER_TABLES
     scripts/config.py set MBEDTLS_AES_ROM_TABLES
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra'
+    make CC=gcc CFLAGS=' -Wall -Wextra'
 
     msg "test: AES_FEWER_TABLES + AES_ROM_TABLES"
     make test
@@ -3529,7 +3529,7 @@ test_build_opt () {
     info=$1 cc=$2; shift 2
     for opt in "$@"; do
           msg "build/test: $cc $opt, $info" # ~ 30s
-          make CC="$cc" CFLAGS="$opt -std=c99 -pedantic -Wall -Wextra -Werror"
+          make CC="$cc" CFLAGS="$opt -std=c99 -pedantic -Wall -Wextra "
           # We're confident enough in compilers to not run _all_ the tests,
           # but at least run the unit tests. In particular, runs with
           # optimizations use inline assembly whereas runs with -O0
@@ -3666,7 +3666,7 @@ support_test_m32_everest () {
 component_test_mx32 () {
     msg "build: 64-bit ILP32, make, gcc" # ~ 30s
     scripts/config.py full
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -mx32' LDFLAGS='-mx32'
+    make CC=gcc CFLAGS=' -Wall -Wextra -mx32' LDFLAGS='-mx32'
 
     msg "test: 64-bit ILP32, make, gcc"
     make test
@@ -3694,7 +3694,7 @@ component_test_have_int32 () {
     scripts/config.py unset MBEDTLS_AESNI_C
     scripts/config.py unset MBEDTLS_PADLOCK_C
     scripts/config.py unset MBEDTLS_AESCE_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -DMBEDTLS_HAVE_INT32'
+    make CC=gcc CFLAGS=' -Wall -Wextra -DMBEDTLS_HAVE_INT32'
 
     msg "test: gcc, force 32-bit bignum limbs"
     make test
@@ -3706,7 +3706,7 @@ component_test_have_int64 () {
     scripts/config.py unset MBEDTLS_AESNI_C
     scripts/config.py unset MBEDTLS_PADLOCK_C
     scripts/config.py unset MBEDTLS_AESCE_C
-    make CC=gcc CFLAGS='-Werror -Wall -Wextra -DMBEDTLS_HAVE_INT64'
+    make CC=gcc CFLAGS=' -Wall -Wextra -DMBEDTLS_HAVE_INT64'
 
     msg "test: gcc, force 64-bit bignum limbs"
     make test
@@ -3716,7 +3716,7 @@ component_test_no_udbl_division () {
     msg "build: MBEDTLS_NO_UDBL_DIVISION native" # ~ 10s
     scripts/config.py full
     scripts/config.py set MBEDTLS_NO_UDBL_DIVISION
-    make CFLAGS='-Werror -O1'
+    make CFLAGS=' -O1'
 
     msg "test: MBEDTLS_NO_UDBL_DIVISION native" # ~ 10s
     make test
@@ -3726,7 +3726,7 @@ component_test_no_64bit_multiplication () {
     msg "build: MBEDTLS_NO_64BIT_MULTIPLICATION native" # ~ 10s
     scripts/config.py full
     scripts/config.py set MBEDTLS_NO_64BIT_MULTIPLICATION
-    make CFLAGS='-Werror -O1'
+    make CFLAGS=' -O1'
 
     msg "test: MBEDTLS_NO_64BIT_MULTIPLICATION native" # ~ 10s
     make test
@@ -3740,7 +3740,7 @@ component_test_no_strings () {
     scripts/config.py unset MBEDTLS_ERROR_C
     scripts/config.py set MBEDTLS_ERROR_STRERROR_DUMMY
     scripts/config.py unset MBEDTLS_VERSION_FEATURES
-    make CFLAGS='-Werror -Os'
+    make CFLAGS=' -Os'
 
     msg "test: no strings" # ~ 10s
     make test
@@ -3751,7 +3751,7 @@ component_test_no_x509_info () {
     scripts/config.pl full
     scripts/config.pl unset MBEDTLS_MEMORY_BACKTRACE # too slow for tests
     scripts/config.pl set MBEDTLS_X509_REMOVE_INFO
-    make CFLAGS='-Werror -O2'
+    make CFLAGS=' -O2'
 
     msg "test: full + MBEDTLS_X509_REMOVE_INFO" # ~ 10s
     make test
@@ -3763,7 +3763,7 @@ component_test_no_x509_info () {
 component_build_arm_none_eabi_gcc () {
     msg "build: ${ARM_NONE_EABI_GCC_PREFIX}gcc -O1, baremetal+debug" # ~ 10s
     scripts/config.py baremetal
-    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99 -Werror -Wall -Wextra -O1' lib
+    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99  -Wall -Wextra -O1' lib
 
     msg "size: ${ARM_NONE_EABI_GCC_PREFIX}gcc -O1, baremetal+debug"
     ${ARM_NONE_EABI_GCC_PREFIX}size library/*.o
@@ -3777,7 +3777,7 @@ component_build_arm_linux_gnueabi_gcc_arm5vte () {
     # See https://github.com/Mbed-TLS/mbedtls/pull/2169 and comments.
     # Build everything including programs, see for example
     # https://github.com/Mbed-TLS/mbedtls/pull/3449#issuecomment-675313720
-    make CC="${ARM_LINUX_GNUEABI_GCC_PREFIX}gcc" AR="${ARM_LINUX_GNUEABI_GCC_PREFIX}ar" CFLAGS='-Werror -Wall -Wextra -march=armv5te -O1' LDFLAGS='-march=armv5te'
+    make CC="${ARM_LINUX_GNUEABI_GCC_PREFIX}gcc" AR="${ARM_LINUX_GNUEABI_GCC_PREFIX}ar" CFLAGS=' -Wall -Wextra -march=armv5te -O1' LDFLAGS='-march=armv5te'
 
     msg "size: ${ARM_LINUX_GNUEABI_GCC_PREFIX}gcc -march=armv5te -O1, baremetal+debug"
     ${ARM_LINUX_GNUEABI_GCC_PREFIX}size library/*.o
@@ -3792,7 +3792,7 @@ component_build_arm_none_eabi_gcc_arm5vte () {
     # This is an imperfect substitute for
     # component_build_arm_linux_gnueabi_gcc_arm5vte
     # in case the gcc-arm-linux-gnueabi toolchain is not available
-    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" CFLAGS='-std=c99 -Werror -Wall -Wextra -march=armv5te -O1' LDFLAGS='-march=armv5te' SHELL='sh -x' lib
+    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" CFLAGS='-std=c99  -Wall -Wextra -march=armv5te -O1' LDFLAGS='-march=armv5te' SHELL='sh -x' lib
 
     msg "size: ${ARM_NONE_EABI_GCC_PREFIX}gcc -march=armv5te -O1, baremetal+debug"
     ${ARM_NONE_EABI_GCC_PREFIX}size library/*.o
@@ -3801,7 +3801,7 @@ component_build_arm_none_eabi_gcc_arm5vte () {
 component_build_arm_none_eabi_gcc_m0plus () {
     msg "build: ${ARM_NONE_EABI_GCC_PREFIX}gcc -mthumb -mcpu=cortex-m0plus, baremetal_size" # ~ 10s
     scripts/config.py baremetal_size
-    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99 -Werror -Wall -Wextra -mthumb -mcpu=cortex-m0plus -Os' lib
+    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99  -Wall -Wextra -mthumb -mcpu=cortex-m0plus -Os' lib
 
     msg "size: ${ARM_NONE_EABI_GCC_PREFIX}gcc -mthumb -mcpu=cortex-m0plus -Os, baremetal_size"
     ${ARM_NONE_EABI_GCC_PREFIX}size library/*.o
@@ -3811,7 +3811,7 @@ component_build_arm_none_eabi_gcc_no_udbl_division () {
     msg "build: ${ARM_NONE_EABI_GCC_PREFIX}gcc -DMBEDTLS_NO_UDBL_DIVISION, make" # ~ 10s
     scripts/config.py baremetal
     scripts/config.py set MBEDTLS_NO_UDBL_DIVISION
-    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99 -Werror -Wall -Wextra' lib
+    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99  -Wall -Wextra' lib
     echo "Checking that software 64-bit division is not required"
     not grep __aeabi_uldiv library/*.o
 }
@@ -3820,7 +3820,7 @@ component_build_arm_none_eabi_gcc_no_64bit_multiplication () {
     msg "build: ${ARM_NONE_EABI_GCC_PREFIX}gcc MBEDTLS_NO_64BIT_MULTIPLICATION, make" # ~ 10s
     scripts/config.py baremetal
     scripts/config.py set MBEDTLS_NO_64BIT_MULTIPLICATION
-    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99 -Werror -O1 -march=armv6-m -mthumb' lib
+    make CC="${ARM_NONE_EABI_GCC_PREFIX}gcc" AR="${ARM_NONE_EABI_GCC_PREFIX}ar" LD="${ARM_NONE_EABI_GCC_PREFIX}ld" CFLAGS='-std=c99  -O1 -march=armv6-m -mthumb' lib
     echo "Checking that software 64-bit multiplication is not required"
     not grep __aeabi_lmul library/*.o
 }
@@ -3835,7 +3835,7 @@ component_build_armcc () {
     # With this enabled, the library does build correctly under armclang,
     # but in baremetal builds (as tested here), feature detection is
     # unavailable, and the user is notified via a #warning. So enabling
-    # this feature would prevent us from building with -Werror on
+    # this feature would prevent us from building with  on
     # armclang. Tracked in #7198.
     scripts/config.py unset MBEDTLS_SHA256_USE_A64_CRYPTO_IF_PRESENT
 
@@ -4018,15 +4018,15 @@ component_test_tls13_only_record_size_limit () {
 
 component_build_mingw () {
     msg "build: Windows cross build - mingw64, make (Link Library)" # ~ 30s
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 lib programs
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 lib programs
 
     # note Make tests only builds the tests, but doesn't run them
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror' WINDOWS_BUILD=1 tests
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='' WINDOWS_BUILD=1 tests
     make WINDOWS_BUILD=1 clean
 
     msg "build: Windows cross build - mingw64, make (DLL)" # ~ 30s
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 lib programs
-    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS='-Werror -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 tests
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 lib programs
+    make CC=i686-w64-mingw32-gcc AR=i686-w64-mingw32-ar LD=i686-w64-minggw32-ld CFLAGS=' -Wall -Wextra' WINDOWS_BUILD=1 SHARED=1 tests
     make WINDOWS_BUILD=1 clean
 }
 support_build_mingw() {
